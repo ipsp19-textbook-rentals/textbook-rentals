@@ -15,7 +15,7 @@ contract EBookToken {
 
   mapping(address => uint256) public balanceOf;
 
-  constructor(string _title, uint256 _totalSupply, uint256 _taxRate) {
+  constructor(string memory _title, uint256 _totalSupply, uint256 _taxRate) public {
     title = _title;
     totalSupply = _totalSupply;
     taxRate = _taxRate;
@@ -33,10 +33,11 @@ contract EBookToken {
     return true;
   }
 
-
+  /*
   function viewEbook() public view {
 
   }
+  */
 
 
 
