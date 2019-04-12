@@ -1,7 +1,7 @@
 
 pragma solidity >=0.4.22 <0.6.0;
 
-contract EBook {
+contract EBookToken {
 
   string public name;
   string public totalSupply;
