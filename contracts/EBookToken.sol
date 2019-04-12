@@ -3,7 +3,7 @@ pragma solidity >=0.4.22 <0.6.0;
 
 contract EBookToken {
 
-  string public name;
+  string public title;
   uint256 public totalSupply;
   uint256 public taxRate;
 
@@ -15,8 +15,8 @@ contract EBookToken {
 
   mapping(address => uint256) public balanceOf;
 
-  constructor(string _name, uint256 _totalSupply, uint256 _taxRate) {
-    name = _name;
+  constructor(string _title, uint256 _totalSupply, uint256 _taxRate) {
+    title = _title;
     totalSupply = _totalSupply;
     taxRate = _taxRate;
   }
