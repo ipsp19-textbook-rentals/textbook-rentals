@@ -3,7 +3,7 @@ pragma solidity >=0.4.22 <0.6.0;
 
 contract EBookToken {
 
-  string public name;
+  string public title;
   string public totalSupply;
 
   event Transfer(
@@ -14,8 +14,8 @@ contract EBookToken {
 
   mapping(address => uint256) public balanceOf;
 
-  constructor(string _name, uint256 _totalSupply) {
-    name = _name;
+  constructor(string _title, uint256 _totalSupply) {
+    title = _title;
     totalSupply = _totalSupply;
   }
 
