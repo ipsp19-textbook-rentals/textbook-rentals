@@ -4,7 +4,8 @@ pragma solidity >=0.4.22 <0.6.0;
 contract EBookToken {
 
   string public name;
-  string public totalSupply;
+  uint256 public totalSupply;
+  uint256 public taxRate;
 
   event Transfer(
     address _from,
@@ -14,9 +15,10 @@ contract EBookToken {
 
   mapping(address => uint256) public balanceOf;
 
-  constructor(string _name, uint256 _totalSupply) {
+  constructor(string _name, uint256 _totalSupply, uint256 _taxRate) {
     name = _name;
     totalSupply = _totalSupply;
+    taxRate = _taxRate;
   }
 
   function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
