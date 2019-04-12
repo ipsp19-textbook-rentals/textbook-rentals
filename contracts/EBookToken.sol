@@ -6,6 +6,7 @@ contract EBookToken {
   string public title;
   uint256 public totalSupply;
   uint256 public taxRate;
+  address payable public publisher;
 
   event Transfer(
     address _from,
@@ -19,6 +20,8 @@ contract EBookToken {
     title = _title;
     totalSupply = _totalSupply;
     taxRate = _taxRate;
+    publisher = msg.sender;
+    balanceOf[publisher] = _totalSupply;
   }
 
   function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
@@ -35,7 +38,7 @@ contract EBookToken {
 
   /*
   function viewEbook() public view {
-
+    require(balanceOf(msg.sender) >= 1);
   }
   */
 
