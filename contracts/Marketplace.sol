@@ -35,7 +35,8 @@ contract Marketplace {
     require(l.tokenContract.transferFrom(l.owner, msg.sender, _numToBuy));
     l.numCopies -= _numToBuy;
 
-    l.owner.transfer(l.numCopies * l.bookPrice);
+    l.owner.transfer(l.numCopies * l.bookPrice * (1 - l.tokenContract.taxRate()));
+    l.tokenContract.publisher().transfer(l.numCopies * l.bookPrice * l.tokenContract.taxRate());
     msg.sender.transfer(msg.value - l.numCopies * l.bookPrice);
 
 
