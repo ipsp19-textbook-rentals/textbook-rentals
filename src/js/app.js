@@ -1,3 +1,6 @@
+
+
+
 App = {
   web3Provider: null,
   contracts: {},
@@ -43,14 +46,14 @@ App = {
     }).then(function(firstListings) {
       return firstListings.length;
     }).then(function(listingsCount) {
-      var listingResults = $"(listings");
+      var listingResults = $("listings");
       listingResults.empty();
 
       for (var i = 0; i < listingsCount; i++) {
         firstListings(i).then(function(listing){
           var bookPrice = listing[1];
           var numCopies = listing[2];
-          var owner = listing[3],
+          var owner = listing[3];
 
           var listingTemplate = "<div class='book-item'>" + bookPrice + "</div>"
           + "<div class='book-item'>" + numCopies + "</div>"  +
@@ -59,7 +62,7 @@ App = {
         });
       }
     });
-  }
+  },
 
   publishAndSell: function() {
     var title = $('#title').val();
@@ -71,7 +74,6 @@ App = {
       instance.sell(tokenContract, price, numCopies);
     });
   }
-
 
 };
 

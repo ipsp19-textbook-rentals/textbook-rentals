@@ -1,5 +1,5 @@
-const EBookToken = artifacts.require("./EBookToken.sol");
+const EBookToken = artifacts.require("./Marketplace.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(EBookToken, "title", 10, 10);
+  deployer.deploy(Marketplace);
 };
