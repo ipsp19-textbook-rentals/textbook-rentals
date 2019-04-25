@@ -5,7 +5,8 @@ import "./EBookToken.sol";
 
 contract Marketplace {
 
-  mapping(uint256 => Listing[]) private listings;
+  mapping(uint256 => Listing[]) public listings;
+  mapping(uint256 => uint256) public numListings;
   uint256 numBooks;
 
   struct Listing {
@@ -21,6 +22,7 @@ contract Marketplace {
     Listing memory l = Listing(_tokenContract, _bookPrice, _numCopies, msg.sender);
 
     listings[_tokenContract.bookId()].push(l);
+    numListings[_tokenContract.bookId()]++;
 
   }
 

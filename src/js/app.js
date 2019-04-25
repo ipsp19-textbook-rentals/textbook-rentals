@@ -40,11 +40,13 @@ App = {
       }
     });
 
+    //errors here
     App.contracts.Marketplace.deployed().then(function(instance) {
       marketplaceInstance = instance;
-      return marketPlaceInstance.listings(0);
+      return marketplaceInstance.listings(0);
+
     }).then(function(firstListings) {
-      return firstListings.length;
+      return marketplaceInstance.numListings(0);
     }).then(function(listingsCount) {
       var listingResults = $("listings");
       listingResults.empty();
