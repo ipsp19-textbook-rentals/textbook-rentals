@@ -15,7 +15,7 @@ App = {
       web3 = new Web3(App.web3Provider);
     }
     return App.initContract();
-  }
+  },
 
   initContract: function() {
     $.getJSON("Marketplace.json", function(marketplace) {
@@ -23,22 +23,46 @@ App = {
       App.contracts.Marketplace.setProvider(App.web3Provider);
       return App.render();
     });
-  }
+  },
 
   render: function() {
     var marketplace;
 
     web3.eth.getCoinbase(function(err, account) {
-      if (err == null) {
+      if (err === null) {
         App.account = account;
         $("#accountAddress").html("Your Account: " + account);
       }
-    }
+    });
 
     App.contracts.Marketplace.deployed().then(function(instance) {
-      marketplace = instance;
-    }).then() {
-      for (var i = 0; i < )
-    }
+      marketplaceInstance = instance;
+      return marketPlaceInstance.listings(0);
+    }).then(function(firstListings) {
+      return firstListings.length;
+    }).then(function(listingsCount) {
+      var listingResults = $"(listings");
+      listingResults.empty();
+
+      for (var i = 0; i < listingsCount; i++) {
+        firstListings(i).then(function(listing){
+          var bookPrice = listing[1];
+          var numCopies = listing[2];
+          var owner = listing[3],
+
+          var listingTemplate = "<div class='book-item'>" + bookPrice + "</div>"
+          + "<div class='book-item'>" + numCopies + "</div>"  +
+          + "<div class='book-item'>" + owner + "</div>"
+          listingResults.append(listingTemplate);
+        });
+      }
+    });
   }
-}
+
+};
+
+$(function() {
+  $(window).load(function() {
+    App.init();
+  });
+});
