@@ -22,10 +22,23 @@ App = {
       App.contracts.Marketplace = TruffleContract(marketplace);
       App.contracts.Marketplace.setProvider(App.web3Provider);
       return App.render();
-    })
+    });
   }
 
   render: function() {
-    //render each object in listing
+    var marketplace;
+
+    web3.eth.getCoinbase(function(err, account) {
+      if (err == null) {
+        App.account = account;
+        $("#accountAddress").html("Your Account: " + account);
+      }
+    }
+
+    App.contracts.Marketplace.deployed().then(function(instance) {
+      marketplace = instance;
+    }).then() {
+      for (var i = 0; i < )
+    }
   }
 }
