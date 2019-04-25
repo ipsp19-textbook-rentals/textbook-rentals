@@ -28,6 +28,8 @@ App = {
   render: function() {
     var marketplace;
 
+    console.log('llll');
+
     web3.eth.getCoinbase(function(err, account) {
       if (err === null) {
         App.account = account;
