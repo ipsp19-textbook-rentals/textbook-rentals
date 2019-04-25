@@ -59,6 +59,18 @@ App = {
     });
   }
 
+  publishAndSell: function() {
+    var title = $('#title').val();
+    var price = $('#price').val();
+    var numCopies = $('#num-copies').val();
+    App.contracts.Marketplace.deployed().then(function(instance) {
+      return instance.publish(title, num_copies, 0);
+    }).then(function(tokenContract) {
+      instance.sell(tokenContract, price, numCopies);
+    });
+  }
+
+
 };
 
 $(function() {

@@ -41,9 +41,10 @@ contract Marketplace {
 
   }
 
-  function publish(string memory _title, uint256 _totalSupply, uint256 _taxRate) public {
-    new EBookToken(_title, numBooks, _totalSupply, _taxRate);
+  function publish(string memory _title, uint256 _totalSupply, uint256 _taxRate) public returns (EBookToken b) {
+    EBookToken book = new EBookToken(_title, numBooks, _totalSupply, _taxRate);
     numBooks++;
+    return book;
   }
 
 
