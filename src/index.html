@@ -20,7 +20,14 @@
       }
     </style>
     <script>
-      //var books = Document.getElementsByClassName("book-item");
+      $(document).ready(function() {
+        console.log("ready");
+        var books = document.getElementsByClassName("book-item");
+        for (var i = 0; i < books.length; i++) {
+          books[i].append('<button class="btn btn-primary" onclick="App.buy()">Buy</button>')
+          console.log(book[i]);
+        }
+      });
     </script>
   </head>
   <body>
@@ -44,6 +51,7 @@
       <div class="row">
         <div class= "book-container" id="books">
           <!-- <div class="book-item">Book Title</div> -->
+          <div class="book-item">Book Title</div>
         </div>
       </div>
       <div class="row">
