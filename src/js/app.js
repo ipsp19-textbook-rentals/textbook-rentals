@@ -29,6 +29,49 @@ App = {
   },
 
   render: function() {
+    var marketplace;
+
+    console.log('a');
+
+    web3.eth.getCoinbase(function(err, account) {
+      if (err === null) {
+        App.account = account;
+        $("#accountAddress").html("Your Account: " + account);
+      }
+    });
+
+
+    App.contracts.Marketplace.deployed().then(function(instance) {
+      marketplaceInstance = instance;
+      console.log('b');
+
+      return marketplaceInstance.numListings(0);
+      //errors here
+    }).then(function(listingsCount) {
+
+      console.log('c');
+      var listingResults = $("listings");
+
+
+      listingResults.empty();
+
+      for (var i = 0; i < listingsCount.toNumber(); i++) {
+        marketplaceInstance.Listings(0, i).then(function(listing){
+
+          var bookPrice = listing[1];
+          var numCopies = listing[2];
+          var owner = listing[3];
+
+          var listingTemplate = "<div class='book-item'>" + bookPrice + "</div>"
+          + "<div class='book-item'>" + numCopies + "</div>"  +
+          + "<div class='book-item'>" + owner + "</div>"
+          listingResults.append(listingTemplate);
+        });
+      }
+    });
+  },
+  /*
+  render: function() {
     var marketplaceInstance;
     var l;
 
@@ -55,8 +98,6 @@ App = {
 
       listingResults.empty();
 
-
-      
       for (var i = 0; i < listingsCount.toNumber(); i++) {
         marketplaceInstance.Listings(0, i).then(function(listing){
 
@@ -73,6 +114,7 @@ App = {
 
     });
   },
+  */
 
 
 
