@@ -7,28 +7,21 @@
       .book-container {
         display: grid;
         grid-template-columns: auto auto auto auto;
-        background-color: #2196F3;
         padding: 10px;
         margin-top: 10px;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       }
       .book-item {
         background-color: rgba(255, 255, 255, 0.8);
         border: 1px solid rgba(0, 0, 0, 0.8);
         padding: 20px;
+        margin: 20px;
         font-size: 30px;
         text-align: center;
+        border-radius: 15px;
       }
     </style>
-    <script>
-      $(document).ready(function() {
-        console.log("ready");
-        var books = document.getElementsByClassName("book-item");
-        for (var i = 0; i < books.length; i++) {
-          books[i].append('<button class="btn btn-primary" onclick="App.buy()">Buy</button>')
-          console.log(book[i]);
-        }
-      });
-    </script>
   </head>
   <body>
     <div class="container">
@@ -49,9 +42,14 @@
         </div>
       </div>
       <div class="row">
-        <div class= "book-container" id="books">
+        <div class="book-container" id="books">
           <!-- <div class="book-item">Book Title</div> -->
           <div class="book-item">Book Title</div>
+          <div class="book-item">Book Title 2</div>
+          <div class="book-item">Book Title 2</div>
+          <div class="book-item">Book Title 2</div>
+          <div class="book-item">Book Title 2</div>
+          <div class="book-item">Book Title 2</div>
         </div>
       </div>
       <div class="row">
@@ -66,5 +64,13 @@
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
     <script src="js/app.js"></script>
+    <script>
+      $(document).ready(function() {
+        var books = document.getElementsByClassName("book-item");
+        for (var i = 0; i < books.length; i++) {
+          books[i].innerHTML += "<br><button class='btn btn-primary' onclick='App.buy()'>Buy</button>";
+        }
+      });
+    </script>
   </body>
 </html>
