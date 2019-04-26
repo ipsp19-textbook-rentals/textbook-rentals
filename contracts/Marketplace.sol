@@ -7,7 +7,12 @@ contract Marketplace {
 
   mapping(uint256 => Listing[]) public listings;
   mapping(uint256 => uint256) public numListings;
-  uint256 numBooks;
+
+  function numListin(uint256 _x) public returns(uint256) {
+    return numListings[_x];
+  }
+
+  uint256 public numBooks;
 
   struct Listing {
     EBookToken tokenContract;
@@ -16,10 +21,14 @@ contract Marketplace {
     address payable owner;
   }
 
-  function sell(EBookToken _tokenContract, uint256 _bookPrice, uint256 _numCopies) public {
-    require(_tokenContract.balanceOf(msg.sender) >= _numCopies);
+  constructor() public payable {
 
-    Listing memory l = Listing(_tokenContract, _bookPrice, _numCopies, msg.sender);
+  }
+
+  function sell(EBookToken _tokenContract, uint256 _bookPrice, uint256 _numCopies) public {
+    require(_tokenContract.balanceOf(tx.origin) >= _numCopies);
+
+    Listing memory l = Listing(_tokenContract, _bookPrice, _numCopies, tx.origin);
 
     listings[_tokenContract.bookId()].push(l);
     numListings[_tokenContract.bookId()]++;
@@ -47,6 +56,14 @@ contract Marketplace {
     EBookToken book = new EBookToken(_title, numBooks, _totalSupply, _taxRate);
     numBooks++;
     return book;
+  }
+
+  function publishAndSell(string memory _title, uint256 _totalSupply, uint256 _taxRate, uint256 _bookPrice) public {
+
+      EBookToken e = publish(_title, _totalSupply, _taxRate);
+
+      sell(e, _bookPrice, _totalSupply);
+
   }
 
 

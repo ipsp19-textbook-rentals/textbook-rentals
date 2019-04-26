@@ -29,9 +29,10 @@ App = {
   },
 
   render: function() {
-    var marketplace;
+    var marketplaceInstance;
+    var l;
 
-    console.log('llll');
+
 
     web3.eth.getCoinbase(function(err, account) {
       if (err === null) {
@@ -40,19 +41,25 @@ App = {
       }
     });
 
+    console.log('abc');
     //errors here
     App.contracts.Marketplace.deployed().then(function(instance) {
       marketplaceInstance = instance;
-      return marketplaceInstance.listings(0);
+      console.log(marketplaceInstance.numListin(0));
 
-    }).then(function(firstListings) {
-      return marketplaceInstance.numListings(0);
+      return marketplaceInstance.numListin(0);
+
     }).then(function(listingsCount) {
+      console.log(listingsCount);
       var listingResults = $("listings");
+
       listingResults.empty();
 
-      for (var i = 0; i < listingsCount; i++) {
-        firstListings(i).then(function(listing){
+
+      
+      for (var i = 0; i < listingsCount.toNumber(); i++) {
+        marketplaceInstance.Listings(0, i).then(function(listing){
+
           var bookPrice = listing[1];
           var numCopies = listing[2];
           var owner = listing[3];
@@ -63,17 +70,22 @@ App = {
           listingResults.append(listingTemplate);
         });
       }
+
     });
   },
+
+
 
   publishAndSell: function() {
     var title = $('#title').val();
     var price = $('#price').val();
     var numCopies = $('#num-copies').val();
     App.contracts.Marketplace.deployed().then(function(instance) {
-      return instance.publish(title, num_copies, 0);
+      marketplaceInstance = instance;
+      return marketplaceInstance.publish(title, numCopies, 0);
     }).then(function(tokenContract) {
-      instance.sell(tokenContract, price, numCopies);
+      marketplaceInstance.sell(tokenContract, price, numCopies);
+      App.render();
     });
   }
 

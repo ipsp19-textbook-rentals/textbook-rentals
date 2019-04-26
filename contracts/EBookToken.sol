@@ -17,12 +17,12 @@ contract EBookToken {
 
   mapping(address => uint256) public balanceOf;
 
-  constructor(string memory _title, uint256 _bookId, uint256 _totalSupply, uint256 _taxRate) public {
+  constructor(string memory _title, uint256 _bookId, uint256 _totalSupply, uint256 _taxRate) public payable {
     title = _title;
     bookId = _bookId;
     totalSupply = _totalSupply;
     taxRate = _taxRate;
-    publisher = msg.sender;
+    publisher = tx.origin;
     balanceOf[publisher] = _totalSupply;
   }
 
