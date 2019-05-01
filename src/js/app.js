@@ -77,14 +77,13 @@ App = {
             if (sold == false) {
               var title = listing[0];
 
-
               var bookPrice = listing[2];
+              var numCopies = listing[3];
               var owner = listing[4];
 
               var bookId = listing[5];
               var listingId = listing[6];
 
-              //console.log(listingsCount.toNumber());
 
               var listingTemplate = "<div class='book-item'>" + title + "</div>";
 
@@ -95,6 +94,29 @@ App = {
           });
         }
       }
+
+
+      //listing the books that YOU own
+      var libraryResults = $("#books");
+      var listing;
+      libraryResults.empty();
+      for (var j = 0; j < numBooks.toNumber(); j++) {
+        App.marketplaceInstance.listings(j, i).then(function(l){
+          listing = l;
+          var tokenContract = listing[1];
+          return tokenContract.balanceOf(App.account);
+        }).then(function(numBooks){
+            if (numBooks.toNumber() > 0) {
+              var title = listing[0];
+
+              var libraryTemplate = "<div class='book-item'>" + title + "</div>";
+
+              libraryResults.append(libraryTemplate);
+            }
+        });
+
+      }
+
 
 
 
