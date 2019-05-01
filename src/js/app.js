@@ -4,6 +4,7 @@
 App = {
   web3Provider: null,
   contracts: {},
+  marketplaceInstance: null,
 
   init: function() {
     return App.initWeb3();
@@ -24,14 +25,19 @@ App = {
     $.getJSON("Marketplace.json", function(marketplace) {
       App.contracts.Marketplace = TruffleContract(marketplace);
       App.contracts.Marketplace.setProvider(App.web3Provider);
-      return App.render();
+      App.contracts.Marketplace.deployed().then(function(instance) {
+
+        App.marketplaceInstance = instance;
+        return App.render();
+      });
+
     });
   },
 
   render: function() {
-    var marketplace;
+    //var marketplaceInstance;
 
-    console.log('a');
+
 
     web3.eth.getCoinbase(function(err, account) {
       if (err === null) {
@@ -40,95 +46,77 @@ App = {
       }
     });
 
-
+    /*
     App.contracts.Marketplace.deployed().then(function(instance) {
-      marketplaceInstance = instance;
+      App.marketplaceInstance = instance;
       console.log('b');
 
-      return marketplaceInstance.numListings(0);
+      return App.marketplaceInstance.numListings(0);
       //errors here
-    }).then(function(listingsCount) {
 
-      console.log('c');
-      var listingResults = $("listings");
+    }).*/
+
+
+
+    App.marketplaceInstance.numListings(0).then(function(listingsCount) {
+      console.log(listingsCount.toNumber());
+
+      var listingResults = $("#books");
+
+      /*
+      App.marketplaceInstance.numBooks().then(function(numBooks){
+        console.log(numBooks.toNumber());
+      });
+      */
 
 
       listingResults.empty();
 
       for (var i = 0; i < listingsCount.toNumber(); i++) {
-        marketplaceInstance.Listings(0, i).then(function(listing){
 
-          var bookPrice = listing[1];
-          var numCopies = listing[2];
-          var owner = listing[3];
+        App.marketplaceInstance.listings(0, i).then(function(listing){
 
-          var listingTemplate = "<div class='book-item'>" + bookPrice + "</div>"
-          + "<div class='book-item'>" + numCopies + "</div>"  +
-          + "<div class='book-item'>" + owner + "</div>"
+
+          var title = listing[0];
+
+
+          var bookPrice = listing[2];
+          var owner = listing[4];
+
+          //console.log(listingsCount.toNumber());
+          console.log(title);
+          console.log(bookPrice);
+          console.log(owner);
+
+          var listingTemplate = "<div class='book-item'>" + title + "</div>";
+
           listingResults.append(listingTemplate);
-        });
-      }
-    });
-  },
-  /*
-  render: function() {
-    var marketplaceInstance;
-    var l;
-
-
-
-    web3.eth.getCoinbase(function(err, account) {
-      if (err === null) {
-        App.account = account;
-        $("#accountAddress").html("Your Account: " + account);
-      }
-    });
-
-    console.log('abc');
-    //errors here
-    App.contracts.Marketplace.deployed().then(function(instance) {
-      marketplaceInstance = instance;
-      console.log(marketplaceInstance.numListin(0));
-
-      return marketplaceInstance.numListin(0);
-
-    }).then(function(listingsCount) {
-      console.log(listingsCount);
-      var listingResults = $("listings");
-
-      listingResults.empty();
-
-      for (var i = 0; i < listingsCount.toNumber(); i++) {
-        marketplaceInstance.Listings(0, i).then(function(listing){
-
-          var bookPrice = listing[1];
-          var numCopies = listing[2];
-          var owner = listing[3];
-
-          var listingTemplate = "<div class='book-item'>" + bookPrice + "</div>"
-          + "<div class='book-item'>" + numCopies + "</div>"  +
-          + "<div class='book-item'>" + owner + "</div>"
-          listingResults.append(listingTemplate);
+          console.log(listingResults);
         });
       }
 
+
+
     });
   },
-  */
-
 
 
   publishAndSell: function() {
+    //var marketplaceInstance;
     var title = $('#title').val();
     var price = $('#price').val();
     var numCopies = $('#num-copies').val();
+
+    /*
     App.contracts.Marketplace.deployed().then(function(instance) {
-      marketplaceInstance = instance;
-      return marketplaceInstance.publish(title, numCopies, 0);
-    }).then(function(tokenContract) {
-      marketplaceInstance.sell(tokenContract, price, numCopies);
+      console.log('here2');
+      App.marketplaceInstance = instance;
+      App.marketplaceInstance.publishAndSell(".", 10, 10, 10);
       App.render();
     });
+    */
+    App.marketplaceInstance.publishAndSell(".", 10, 10, 10);
+    App.render();
   }
 
 };

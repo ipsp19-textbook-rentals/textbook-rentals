@@ -8,13 +8,10 @@ contract Marketplace {
   mapping(uint256 => Listing[]) public listings;
   mapping(uint256 => uint256) public numListings;
 
-  function numListin(uint256 _x) public returns(uint256) {
-    return numListings[_x];
-  }
-
   uint256 public numBooks;
 
   struct Listing {
+    string title;
     EBookToken tokenContract;
     uint256 bookPrice;
     uint256 numCopies;
@@ -28,7 +25,7 @@ contract Marketplace {
   function sell(EBookToken _tokenContract, uint256 _bookPrice, uint256 _numCopies) public {
     require(_tokenContract.balanceOf(tx.origin) >= _numCopies);
 
-    Listing memory l = Listing(_tokenContract, _bookPrice, _numCopies, tx.origin);
+    Listing memory l = Listing(_tokenContract.title(), _tokenContract, _bookPrice, _numCopies, tx.origin);
 
     listings[_tokenContract.bookId()].push(l);
     numListings[_tokenContract.bookId()]++;
