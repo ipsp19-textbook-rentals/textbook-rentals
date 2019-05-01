@@ -16,6 +16,9 @@ contract Marketplace {
     uint256 bookPrice;
     uint256 numCopies;
     address payable owner;
+    uint256 bookId;
+    uint256 listingId;
+    bool sold;
   }
 
   constructor() public payable {
@@ -25,7 +28,8 @@ contract Marketplace {
   function sell(EBookToken _tokenContract, uint256 _bookPrice, uint256 _numCopies) public {
     require(_tokenContract.balanceOf(tx.origin) >= _numCopies);
 
-    Listing memory l = Listing(_tokenContract.title(), _tokenContract, _bookPrice, _numCopies, tx.origin);
+    Listing memory l = Listing(_tokenContract.title(), _tokenContract, _bookPrice, _numCopies, tx.origin, _tokenContract.bookId(), numListings[_tokenContract.bookId()], false);
+
 
     listings[_tokenContract.bookId()].push(l);
     numListings[_tokenContract.bookId()]++;
@@ -37,15 +41,19 @@ contract Marketplace {
 
     Listing storage l = listings[_bookId][_listingId];
     require(l.numCopies >= _numToBuy);
-    require(l.numCopies * l.bookPrice >= msg.value);
+    require(_numToBuy * l.bookPrice <= msg.value);
 
     // transfers the tokens
     require(l.tokenContract.transferFrom(l.owner, msg.sender, _numToBuy));
     l.numCopies -= _numToBuy;
 
-    l.owner.transfer(l.numCopies * l.bookPrice * (1 - l.tokenContract.taxRate() / 100));
-    l.tokenContract.publisher().transfer(l.numCopies * l.bookPrice * l.tokenContract.taxRate() / 100);
-    msg.sender.transfer(msg.value - l.numCopies * l.bookPrice);
+    if(l.numCopies == 0) {
+      l.sold = true;
+    }
+
+    l.owner.transfer(_numToBuy * l.bookPrice * (100 - l.tokenContract.taxRate()) / 100);
+    l.tokenContract.publisher().transfer(_numToBuy * l.bookPrice * l.tokenContract.taxRate() / 100);
+    msg.sender.transfer(msg.value - _numToBuy * l.bookPrice);
 
   }
 
