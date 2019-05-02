@@ -58,6 +58,7 @@ App = {
 
 
     var listingsCount;
+
     App.marketplaceInstance.numListings(0).then(function(lc) {
       listingsCount = lc;
       return App.marketplaceInstance.numBooks();
@@ -65,11 +66,17 @@ App = {
 
 
       var listingResults = $("#books");
+
       listingResults.empty();
+
+      var libraryResults = $("#library"); ////
+      libraryResults.empty(); //////
 
       for (var j = 0; j < numBooks.toNumber(); j++) {
         for (var i = 0; i < listingsCount.toNumber(); i++) {
 
+          var balance;
+          balance = await App.marketplaceInstance.balanceOf(j);
           App.marketplaceInstance.listings(j, i).then(function(listing){
 
             var sold = listing[7];
@@ -88,34 +95,51 @@ App = {
               var listingTemplate = "<div class='book-item'>" + title + "</div>";
 
               listingResults.append(listingTemplate);
+
+              /*
+              var balance;
+              App.marketplaceInstance.balanceOf(j).then(function(b){
+                balance = b;
+                return App.marketplaceInstance.listings(j, i);
+              })
+              */
+
+              if (i == 1) {
+                libraryResults.append(listingTemplate);
+              }
+
+
               App.addButton(bookId, listingId);
-              console.log(listingResults);
+
             }
           });
         }
       }
 
-
+      //console.log("a");
       //listing the books that YOU own
-      var libraryResults = $("#books");
+      /*
+      var libraryResults = $("#library");
       var listing;
       libraryResults.empty();
       for (var j = 0; j < numBooks.toNumber(); j++) {
-        App.marketplaceInstance.listings(j, i).then(function(l){
+
+        App.marketplaceInstance.listings(j, 0).then(function(l){
           listing = l;
-          var tokenContract = listing[1];
-          return tokenContract.balanceOf(App.account);
+
+          return App.marketplaceInstance.balanceOf(App.account);
         }).then(function(numBooks){
-            if (numBooks.toNumber() > 0) {
-              var title = listing[0];
+          console.log(numBooks);
+          if (numBooks.toNumber() > 0) {
+            var title = listing[0];
+            var libraryTemplate = "<div class='book-item'>" + title + "</div>";
 
-              var libraryTemplate = "<div class='book-item'>" + title + "</div>";
-
-              libraryResults.append(libraryTemplate);
-            }
+            libraryResults.append(libraryTemplate);
+          }
         });
 
       }
+      */
 
 
 
@@ -130,14 +154,6 @@ App = {
     var price = $('#price').val();
     var numCopies = $('#num-copies').val();
 
-    /*
-    App.contracts.Marketplace.deployed().then(function(instance) {
-      console.log('here2');
-      App.marketplaceInstance = instance;
-      App.marketplaceInstance.publishAndSell(".", 10, 10, 10);
-      App.render();
-    });
-    */
     App.marketplaceInstance.publishAndSell(title, 1, 10, price);
     App.render();
   },

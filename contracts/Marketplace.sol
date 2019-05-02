@@ -21,8 +21,10 @@ contract Marketplace {
     bool sold;
   }
 
-  constructor() public payable {
-
+  function balanceOf(uint256 _bookId) public view returns (uint256) {
+    //require(listings[_bookId].length > 0);
+    Listing memory l = listings[_bookId][0];
+    return l.tokenContract.balanceOf(tx.origin);
   }
 
   function sell(EBookToken _tokenContract, uint256 _bookPrice, uint256 _numCopies) public {
