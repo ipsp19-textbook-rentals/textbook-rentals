@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Store</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      .book-container {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+      .book-item {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        margin: 20px;
+        font-size: 30px;
+        text-align: center;
+      }
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #2EAAB6;
+      }
+
+      li {
+        float: left;
+      }
+
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 18px 50px;
+        text-decoration: none;
+      }
+
+      li t {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 18px 50px;
+        text-decoration: none;
+      }
+
+li a:hover {
+  background-color: #1B9DAA;
+}
+    </style>
+  </head>
+  <body>
+    <ul>
+    <li><t>NAME OF APP</t></li>
+    <li><a href="./library.html">My Library</a></li>
+    <li><a href="./index.html">Store</a></li>
+  </ul>
+    <div class="container">
+      <div class="row">
+        <h1 class="text-left">Publish</h1>
+      </div>
+      <div class="row">
+          <form class="form" onSubmit="App.publishAndSell(); return false">
+            <label for="isbn">ISBN</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" id="isbn">
+            <label for="title">Title</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" id="title">
+            Contributors
+            <div class="form-row">
+              <div class="form-group col-md-2">
+                <label for="contributor" class="sr-only">Contributor</label>
+                <select id="contributor" class="form-control">
+                  <option selected>Author</option>
+                  <option>Editor</option>
+                </select>
+              </div>
+              <div class="form-group col-md-5">
+                <label class="sr-only" for="firstname">first name</label>
+                <input type="text" class="form-control" id="firstname" placeholder="First Name">
+              </div>
+              <div class="form-group col-md-5">
+                <label class="sr-only" for="lastname">last name</label>
+                <input type="text" class="form-control" id="lastname" placeholder="Last Name">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-8">
+                <label for="publisher">Publisher</label>
+                <input type="text" class="form-control" id="firstname">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="date">Published Date</label>
+                <input type="text" class="form-control" id="date">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-2">
+              <label for="price">Price</label>
+              <input type="text" class="form-control mb-2 mr-sm-2" id="price">
+              </div>
+              <div class="form-group col-md-3">
+              <label for="tax">Tax Percentage on Resale</label>
+              <input type="text" class="form-control mb-2 mr-sm-2" id="tax">
+              </div>
+            </div>
+            <label class="sr-only" for="num-copies">NumCopies</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" id="num-copies" placeholder="Number of Copies">
+            <button type="submit" class="btn btn-primary">Publish</button>
+          </form>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+    </script>
+  </body>
+</html>
