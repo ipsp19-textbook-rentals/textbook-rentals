@@ -76,7 +76,7 @@ App = {
         for (var i = 0; i < listingsCount.toNumber(); i++) {
 
           var balance;
-          balance = await App.marketplaceInstance.balanceOf(j);
+          balance = App.marketplaceInstance.balanceOf(j);
           App.marketplaceInstance.listings(j, i).then(function(listing){
 
             var sold = listing[7];

@@ -4,22 +4,6 @@
     <title>Store</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <style>
-      .book-container {
-        display: grid;
-        grid-template-columns: auto auto auto auto;
-        padding: 10px;
-        margin-top: 10px;
-        border-radius: 15px;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-      }
-      .book-item {
-        background-color: rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(0, 0, 0, 0.8);
-        padding: 20px;
-        margin: 20px;
-        font-size: 30px;
-        text-align: center;
-      }
       ul {
         list-style-type: none;
         margin: 0;
@@ -49,8 +33,23 @@
         text-decoration: none;
       }
 
+      .show {
+        visibility: hidden;
+      }
+
+      .tall {
+        height: 100px;
+      }
+
+      input {
+        margin-top: 5px;
+        margin-bottom: 5px
+      }
+
 li a:hover {
   background-color: #1B9DAA;
+  text-decoration: none;
+  color: white;
 }
     </style>
   </head>
@@ -66,25 +65,32 @@ li a:hover {
       </div>
       <div class="row">
           <form class="form" onSubmit="App.publishAndSell(); return false">
-            <label for="isbn">ISBN</label>
-            <input type="text" class="form-control mb-2 mr-sm-2" id="isbn">
-            <label for="title">Title</label>
-            <input type="text" class="form-control mb-2 mr-sm-2" id="title">
-            Contributors
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="isbn">ISBN</label>
+                <input type="text" class="form-control mb-2 mr-sm-2" id="isbn">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="title">Title</label>
+                <input type="text" class="form-control mb-2 mr-sm-2" id="title">
+              </div>
+            </div>
             <div class="form-row">
               <div class="form-group col-md-2">
-                <label for="contributor" class="sr-only">Contributor</label>
+                <label for="contributor">Contributors</label>
                 <select id="contributor" class="form-control">
                   <option selected>Author</option>
                   <option>Editor</option>
                 </select>
               </div>
               <div class="form-group col-md-5">
-                <label class="sr-only" for="firstname">first name</label>
+                <label class="show" for="firstname">first name</label>
                 <input type="text" class="form-control" id="firstname" placeholder="First Name">
               </div>
               <div class="form-group col-md-5">
-                <label class="sr-only" for="lastname">last name</label>
+                <label class="show" for="lastname">last name</label>
                 <input type="text" class="form-control" id="lastname" placeholder="Last Name">
               </div>
             </div>
@@ -96,6 +102,12 @@ li a:hover {
               <div class="form-group col-md-4">
                 <label for="date">Published Date</label>
                 <input type="text" class="form-control" id="date">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="description">Description</label>
+                <input type="text" class="form-control tall" id="description">
               </div>
             </div>
             <div class="form-row">
@@ -115,8 +127,8 @@ li a:hover {
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
+            <button class="btn btn-success" onclick="window.location.href = './index.html';">Cancel</button>
           </form>
-          <button class="btn btn-success" onclick="window.location.href = './index.html';">Cancel</button>
       </div>
     </div>
 
