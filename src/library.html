@@ -76,6 +76,22 @@
         }
         .show {display:block;}
 
+        .popup {
+          margin-top: 30px;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          padding: 20px;
+          width: 30%;
+          visibility: hidden;
+        }
+
+        .show2 {
+          visibility: visible;
+        }
+
+        input {
+          margin-bottom: 15px;
+        }
+
 li a:hover {
   background-color: #1B9DAA;
   text-decoration: none;
@@ -105,8 +121,13 @@ li a:hover {
           <!-- <div class="book-item">Book Title</div> -->
         </div>
       </div>
-      <div class="row">
-        <p id="accountAddress" class="text-center"></p>
+      <div class="popup" id="popup">
+        <form onSubmit="App.sell(); return false">
+          <label for="price">Resale Price</label>
+          <input type="text" class="form-control" id="price">
+          <button type="submit" class="btn btn-primary">Confirm</button>
+          <button class="btn btn-success">Cancel</button>
+        </form>
       </div>
     </div>
 
@@ -120,6 +141,10 @@ li a:hover {
     <script>
     function showProfile() {
       document.getElementById("dropdown").classList.toggle("show");
+    }
+    function resell(bookId, listingId) {
+      var popup = document.getElementById("popup");
+      popup.classList.toggle("show2");
     }
     </script>
   </body>

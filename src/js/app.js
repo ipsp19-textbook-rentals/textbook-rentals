@@ -154,6 +154,7 @@ App = {
           var libraryTemplate = "<div class='book-item'>" + title + "</div>";
 
           libraryResults.append(libraryTemplate);
+          App.addLibraryButton(listing[5], listing[6]);
         }
       });
     }
@@ -173,9 +174,13 @@ App = {
 
   addButton: function(bookId, listingId) {
     var books = document.getElementsByClassName("book-item");
-    // for (var i = 0; i < books.length; i++) {
     books[books.length - 1].innerHTML += "<br><button class='btn btn-primary' onclick='App.buy(\"" + bookId + "\",\"" + listingId + "\", 1)'>Buy</button>";
+  },
 
+  addLibraryButton: function(bookId, listingId) {
+    var books = document.getElementsByClassName("book-item");
+    books[books.length - 1].innerHTML += "<br><button class='btn btn-primary'>Read</button>";
+    books[books.length - 1].innerHTML += "<br><button class='btn btn-primary' onclick='resell(\"" + bookId + "\",\"" + listingId + "\")'>Resell</button>";
   },
 
   buy: function(bookId, listingId, numToBuy) {
