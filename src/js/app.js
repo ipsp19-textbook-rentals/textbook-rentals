@@ -95,6 +95,10 @@ App = {
 
         App.marketplaceInstance.listings(j, i).then(function(listing){
 
+<<<<<<< HEAD
+          App.marketplaceInstance.listings(j, i).then(function(listing){
+=======
+>>>>>>> 7b0960fd767c72fc11b773018442f7ee418ced52
 
             var sold = listing[7];
 

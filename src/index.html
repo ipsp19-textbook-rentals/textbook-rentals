@@ -48,6 +48,34 @@
         text-decoration: none;
       }
 
+      .profile {
+        height: 40px;
+        width: 40px;
+        background-color: #fff;
+        border-radius: 50%;
+        display: block;
+        margin-right: 50px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 40px;
+      }
+
+      .dropdown {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+      }
+
+      .dropdown a {
+        color: black;
+        padding: 16px 24px;
+        text-decoration: none;
+        display: block;
+      }
+      .show {display:block;}
+
 li a:hover {
   background-color: #1B9DAA;
   text-decoration: none;
@@ -60,6 +88,13 @@ li a:hover {
     <li><t>NAME OF APP</t></li>
     <li><a href="./library.html">My Library</a></li>
     <li><a href="./index.html">Store</a></li>
+    <li style="float:right"><span class="profile" onclick="showProfile()"></span>
+      <div id="dropdown" class="dropdown">
+        <a href="#">Edit Profile</a>
+        <a href="#">Your Wallet</a>
+        <a href="#">Settings</a>
+      </div>
+    </li>
   </ul>
     <div class="container">
       <div class="row">
@@ -88,6 +123,9 @@ li a:hover {
     <script src="js/truffle-contract.js"></script>
     <script src="js/app.js"></script>
     <script>
+      function showProfile() {
+        document.getElementById("dropdown").classList.toggle("show");
+      }
     </script>
   </body>
 </html>
