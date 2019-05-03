@@ -90,11 +90,6 @@ App = {
       for (var j = 0; j < numBooks.toNumber(); j++) {
         for (var i = 0; i < listingsCount.toNumber(); i++) {
 
-<<<<<<< HEAD
-          var balance;
-          balance = App.marketplaceInstance.balanceOf(j);
-=======
->>>>>>> da707866e6d07b0fe35cd9dcfecd1daf74b8cb75
           App.marketplaceInstance.listings(j, i).then(function(listing){
 
             var sold = listing[7];
