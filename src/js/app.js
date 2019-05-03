@@ -95,8 +95,6 @@ App = {
 
         App.marketplaceInstance.listings(j, i).then(function(listing){
 
-            console.log('a');
-
 
             var sold = listing[7];
 
