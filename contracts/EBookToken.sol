@@ -8,6 +8,7 @@ contract EBookToken {
   uint256 public totalSupply;
   uint256 public taxRate;
   address payable public publisher;
+  bool public onMarket;
 
   event Transfer(
     address _from,

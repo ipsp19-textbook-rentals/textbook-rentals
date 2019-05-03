@@ -19,6 +19,7 @@ contract Marketplace {
     uint256 bookId;
     uint256 listingId;
     bool sold;
+    bool resold;
   }
 
   event Buy(
@@ -40,12 +41,19 @@ contract Marketplace {
     return l.tokenContract.balanceOf(tx.origin);
   }
 
+  function getPublisher(EBookToken _tokenContract) public view returns (address) {
+    return _tokenContract.publisher();
+  }
+
+  function updateResold(uint256 _bookId, uint _listingId, bool isResold) public {
+    listings[_bookId][_listingId].resold = isResold;
+  }
+
 
   function sell(EBookToken _tokenContract, uint256 _bookPrice, uint256 _numCopies) public {
     require(_tokenContract.balanceOf(tx.origin) >= _numCopies);
 
-    Listing memory l = Listing(_tokenContract.title(), _tokenContract, _bookPrice, _numCopies, tx.origin, _tokenContract.bookId(), numListings[_tokenContract.bookId()], false);
-
+    Listing memory l = Listing(_tokenContract.title(), _tokenContract, _bookPrice, _numCopies, tx.origin, _tokenContract.bookId(), numListings[_tokenContract.bookId()], false, false);
 
     listings[_tokenContract.bookId()].push(l);
     numListings[_tokenContract.bookId()]++;
@@ -66,6 +74,8 @@ contract Marketplace {
     if(l.numCopies == 0) {
       l.sold = true;
     }
+
+    l.resold = false;
 
     l.owner.transfer(_numToBuy * l.bookPrice * (100 - l.tokenContract.taxRate()) / 100);
     l.tokenContract.publisher().transfer(_numToBuy * l.bookPrice * l.tokenContract.taxRate() / 100);
