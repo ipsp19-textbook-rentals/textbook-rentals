@@ -34,10 +34,25 @@ App = {
     });
   },
 
+  listenForEvents: function() {
+    App.contracts.Election.deployed().then(function(instance) {
+      // Restart Chrome if you are unable to receive this event
+      // This is a known issue with Metamask
+      // https://github.com/MetaMask/metamask-extension/issues/2393
+      instance.publishAndSell({}, {
+        fromBlock: 0,
+        toBlock: 'latest'
+      }).watch(function(error, event) {
+        console.log("event triggered", event)
+        // Reload when a new vote is recorded
+        App.render();
+      });
+    });
+  },
+
+
   render: function() {
     //var marketplaceInstance;
-
-
 
     web3.eth.getCoinbase(function(err, account) {
       if (err === null) {
@@ -75,8 +90,6 @@ App = {
       for (var j = 0; j < numBooks.toNumber(); j++) {
         for (var i = 0; i < listingsCount.toNumber(); i++) {
 
-          var balance;
-          balance = await App.marketplaceInstance.balanceOf(j);
           App.marketplaceInstance.listings(j, i).then(function(listing){
 
             var sold = listing[7];
@@ -91,8 +104,8 @@ App = {
               var bookId = listing[5];
               var listingId = listing[6];
 
-
               var listingTemplate = "<div class='book-item'>" + title + "</div>";
+
 
               listingResults.append(listingTemplate);
 
