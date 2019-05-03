@@ -91,7 +91,6 @@ App = {
 
       for (var j = 0; j < numBooks.toNumber(); j++) {
         for (var i = 0; i < listingsCount.toNumber(); i++) {
-          console.log('hello world');
 
           App.marketplaceInstance.listings(j, i).then(function(listing){
 
@@ -102,12 +101,14 @@ App = {
 
               var bookPrice = listing[2];
               var numCopies = listing[3];
+              console.log("numCopies");
+              console.log(numCopies.toNumber());
               var owner = listing[4];
 
               var bookId = listing[5];
               var listingId = listing[6];
 
-              var listingTemplate = "<div class='book-item'>" + title + "</div>";
+              var listingTemplate = "<div class='book-item'>" + title + "<br><div class='copy'>Copies remaining: " + numCopies + "</div></div>";
 
 
               listingResults.append(listingTemplate);
@@ -140,6 +141,7 @@ App = {
     }).then(function(numBooks) {
     var libraryResults = $("#library");
     var listing;
+    var count = 0;
     libraryResults.empty();
     for (var j = 0; j < numBooks.toNumber(); j++) {
 
@@ -148,15 +150,17 @@ App = {
       //   return })
       App.marketplaceInstance.listings(j, 0).then(function(l){listing=l});
       App.marketplaceInstance.balanceOf(j).then(function(numBook){
-        console.log(numBook.toNumber());
         if (numBook.toNumber() > 0) {
           var title = listing[0];
-          var libraryTemplate = "<div class='book-item'>" + title + "</div>";
+          var libraryTemplate = "<div class='book-item-library'>" + title + "</div>";
 
           libraryResults.append(libraryTemplate);
           App.addLibraryButton(listing[5], listing[6]);
+        } else {
+          count +=1;
         }
-      });
+      }).then(function() {
+        if(count == numBooks.toNumber()){libraryEmpty()}});
     }
     });
   },
@@ -168,7 +172,7 @@ App = {
     var price = $('#price').val();
     var numCopies = $('#num-copies').val();
 
-    App.marketplaceInstance.publishAndSell(title, 1, 10, price);
+    App.marketplaceInstance.publishAndSell(title, numCopies, 10, price);
     App.render();
   },
 
@@ -178,7 +182,7 @@ App = {
   },
 
   addLibraryButton: function(bookId, listingId) {
-    var books = document.getElementsByClassName("book-item");
+    var books = document.getElementsByClassName("book-item-library");
     books[books.length - 1].innerHTML += "<br><button class='btn btn-primary'>Read</button>";
     books[books.length - 1].innerHTML += "<br><button class='btn btn-primary' onclick='resell(\"" + bookId + "\",\"" + listingId + "\")'>Resell</button>";
   },

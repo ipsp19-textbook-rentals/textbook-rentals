@@ -12,7 +12,7 @@
         border-radius: 15px;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       }
-      .book-item {
+      .book-item-library {
         background-color: rgba(255, 255, 255, 0.8);
         padding: 20px;
         margin: 20px;
@@ -92,6 +92,10 @@
           margin-bottom: 15px;
         }
 
+        .empty {
+            margin-left: 460px;
+        }
+
 li a:hover {
   background-color: #1B9DAA;
   text-decoration: none;
@@ -118,7 +122,6 @@ li a:hover {
       </div>
       <div class="row">
         <div class="book-container" id="library">
-          <!-- <div class="book-item">Book Title</div> -->
         </div>
       </div>
       <div class="popup" id="popup">
@@ -146,6 +149,12 @@ li a:hover {
       var popup = document.getElementById("popup");
       popup.classList.toggle("show2");
     }
+    function libraryEmpty() {
+      console.log("run");
+      if (document.getElementById("library").children.length == 0 ) {
+	       document.getElementById("library").innerHTML = "<div class='empty'>You have no books in your library</div>";
+     }
+   }
     </script>
   </body>
 </html>
