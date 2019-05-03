@@ -28,12 +28,14 @@ App = {
       App.contracts.Marketplace.deployed().then(function(instance) {
 
         App.marketplaceInstance = instance;
+        //App.listenForEvents();
         return App.render();
       });
 
     });
   },
 
+/*
   listenForEvents: function() {
     App.contracts.Election.deployed().then(function(instance) {
       // Restart Chrome if you are unable to receive this event
@@ -47,12 +49,12 @@ App = {
         // Reload when a new vote is recorded
         App.render();
       });
-    });
   },
+  */
+
 
 
   render: function() {
-    //var marketplaceInstance;
 
     web3.eth.getCoinbase(function(err, account) {
       if (err === null) {
@@ -89,8 +91,12 @@ App = {
 
       for (var j = 0; j < numBooks.toNumber(); j++) {
         for (var i = 0; i < listingsCount.toNumber(); i++) {
+          console.log('hello world');
 
-          App.marketplaceInstance.listings(j, i).then(function(listing){
+        App.marketplaceInstance.listings(j, i).then(function(listing){
+
+            console.log('a');
+
 
             var sold = listing[7];
 
@@ -117,7 +123,8 @@ App = {
               })
               */
 
-              if (i == 1) {
+
+              if (i == 1, owner == App.account) {
                 libraryResults.append(listingTemplate);
               }
 
