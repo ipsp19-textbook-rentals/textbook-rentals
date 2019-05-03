@@ -21,23 +21,25 @@ contract Marketplace {
     bool sold;
   }
 
-  event buy(
+  event Buy(
     string _title,
     uint256 _bookPrice,
-    uint256 _numCopies;
+    uint256 _numCopies
   );
 
-  event publishAndSell(
-    string _title;
-    uint256 _totalSupply;
-    uint256 _bookPrice;
+  event PublishAndSell(
+    string _title,
+    uint256 _totalSupply,
+    uint256 _bookPrice
   );
+
 
   function balanceOf(uint256 _bookId) public view returns (uint256) {
     //require(listings[_bookId].length > 0);
     Listing memory l = listings[_bookId][0];
     return l.tokenContract.balanceOf(tx.origin);
   }
+
 
   function sell(EBookToken _tokenContract, uint256 _bookPrice, uint256 _numCopies) public {
     require(_tokenContract.balanceOf(tx.origin) >= _numCopies);
@@ -69,7 +71,7 @@ contract Marketplace {
     l.tokenContract.publisher().transfer(_numToBuy * l.bookPrice * l.tokenContract.taxRate() / 100);
     msg.sender.transfer(msg.value - _numToBuy * l.bookPrice);
 
-    emit Transfer(l.title, l.bookPrice, _numToBuy);
+    emit Buy(l.title, l.bookPrice, _numToBuy);
 
   }
 
@@ -85,7 +87,7 @@ contract Marketplace {
 
       sell(e, _bookPrice, _totalSupply);
 
-      emit publishAndSell(_title, _totalSupply, _bookPrice);
+      emit PublishAndSell(_title, _totalSupply, _bookPrice);
 
   }
 

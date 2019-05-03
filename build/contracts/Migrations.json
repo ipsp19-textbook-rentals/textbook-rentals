@@ -1378,6 +1378,11 @@
     "name": "solc",
     "version": "0.5.0+commit.1d4f565a.Emscripten.clang"
   },
+<<<<<<< HEAD
+  "networks": {},
+  "schemaVersion": "3.0.1",
+  "updatedAt": "2019-05-03T02:48:23.536Z",
+=======
   "networks": {
     "5777": {
       "events": {},
@@ -1388,6 +1393,7 @@
   },
   "schemaVersion": "3.0.6",
   "updatedAt": "2019-05-03T01:32:05.306Z",
+>>>>>>> b10cd1b7dfb9b4a803b231a7a7f07f3260e69c36
   "devdoc": {
     "methods": {}
   },
