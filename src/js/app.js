@@ -108,7 +108,7 @@ App = {
               var bookId = listing[5];
               var listingId = listing[6];
 
-              var listingTemplate = "<div class='book-item'>" + title + "<br><div class='copy'>Price: $" + bookPrice + "</div><br><div class='copy'>Copies remaining: " + numCopies + "</div></div>";
+              var listingTemplate = "<div class='book-item'>" + title + "<br><div class='copy'>Price: $" + bookPrice + "</div><div class='copy'>Copies remaining: " + numCopies + "</div></div>";
 
 
               listingResults.append(listingTemplate);
@@ -143,6 +143,9 @@ App = {
     var listing;
     var count = 0;
     libraryResults.empty();
+    if (numBooks.toNumber() == 0) {
+      libraryEmpty();
+    }
     for (var j = 0; j < numBooks.toNumber(); j++) {
 
       // App.marketplaceInstance.listings(j, 0).then(function(l){
@@ -196,6 +199,7 @@ App = {
 
   resell: function(bookId, listingId) {
     var price = $('#resale-price').val();
+    console.log(price);
     App.marketplaceInstance.listings(bookId, listingId).then(function(listing) {
       App.marketplaceInstance.sell(listing[1], price, 1);
     });

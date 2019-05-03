@@ -125,7 +125,7 @@ li a:hover {
         </div>
       </div>
       <div class="popup" id="popup">
-        <form onSubmit="App.sell(); return false">
+        <form onSubmit="App.resell(bId, lId); return false">
           <label for="resale-price">Resale Price</label>
           <input type="text" class="form-control" id="resale-price">
           <button type="submit" class="btn btn-primary">Confirm</button>
@@ -142,12 +142,18 @@ li a:hover {
     <script src="js/truffle-contract.js"></script>
     <script src="js/app.js"></script>
     <script>
+    var bId;
+    var lId;
     function showProfile() {
       document.getElementById("dropdown").classList.toggle("show");
     }
     function resell(bookId, listingId) {
+      bId = bookId;
+      lId = listingId;
       var popup = document.getElementById("popup");
       popup.classList.toggle("show2");
+      console.log(bId);
+      console.log(lId);
     }
     function libraryEmpty() {
       console.log("run");
